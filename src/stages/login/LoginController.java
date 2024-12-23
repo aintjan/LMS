@@ -19,7 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.animation.Interpolator;
 import java.io.IOException;
 import Function.*;
-import javax.swing.*;
+
 import java.sql.*;
 
 public class LoginController {
@@ -337,7 +337,7 @@ public class LoginController {
                 String pass = rs.getString("password");
                 Double penalty = rs.getDouble("penalty");
 
-                globalVariable.loginStudent = new Student(school_id, fName,lName, section, email, pass, penalty);
+                globalVariable.loginStudent = new Student();
 
                 Parent root = FXMLLoader.load(getClass().getResource("/stages/student/studentFXML/student_dashboard.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -397,7 +397,7 @@ public class LoginController {
             errorText.setText("Password does not match"); return;
         }
 
-        Student newStudent = new Student(studentID, fName, lName, section, email, pass, 0);
+        Student newStudent = new Student();
         studentID = dbFunc.insertStudentDB(newStudent);
         if(studentID!=0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Student registered successfully");

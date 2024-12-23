@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import Entity.Book;
@@ -345,6 +346,181 @@ public class dbFunction {
             showAlert("DeleteStudentError", e.getMessage());
         }
     }
+
+    public List<Staff> sortStaffByLastNameASC() {
+        List<Staff> staffList = new ArrayList<>();
+        try {
+            Connection conn = connectToDB();
+            String sqlSortStaff = "SELECT * FROM librarydb.staff ORDER BY lName ASC";
+            PreparedStatement pstmt = conn.prepareStatement(sqlSortStaff);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Staff staff = new Staff();
+                staff.setStaffID(rs.getInt("staff_id"));
+                staff.setfName(rs.getString("fName"));
+                staff.setlName(rs.getString("lName"));
+                staff.setPosition(rs.getString("position"));
+                staff.setEmail(rs.getString("email"));
+                staff.setPass(rs.getString("password"));
+                staffList.add(staff);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("SortStaffError", e.getMessage());
+        }
+        return staffList;
+    }
+
+    public List<Student> sortStudentsByLastNameASC() {
+        List<Student> studentList = new ArrayList<>();
+        try {
+            Connection conn = connectToDB();
+            String sqlSortStudents = "SELECT * FROM librarydb.student ORDER BY lName ASC";
+            PreparedStatement pstmt = conn.prepareStatement(sqlSortStudents);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Student student = new Student();
+                student.setSchoolID(rs.getInt("school_id"));
+                student.setfName(rs.getString("fName"));
+                student.setlName(rs.getString("lName"));
+                student.setSection(rs.getString("section"));
+                student.setEmail(rs.getString("email"));
+                student.setPass(rs.getString("password"));
+                student.setPenalty(rs.getDouble("penalty"));
+                studentList.add(student);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("SortStudentsError", e.getMessage());
+        }
+        return studentList;
+    }
+
+    public List<Student> sortStudentsByLastNameDESC() {
+        List<Student> studentList = new ArrayList<>();
+        try {
+            Connection conn = connectToDB();
+            String sqlSortStudentsDesc = "SELECT * FROM librarydb.student ORDER BY lName DESC";
+            PreparedStatement pstmt = conn.prepareStatement(sqlSortStudentsDesc);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Student student = new Student();
+                student.setSchoolID(rs.getInt("school_id"));
+                student.setfName(rs.getString("fName"));
+                student.setlName(rs.getString("lName"));
+                student.setSection(rs.getString("section"));
+                student.setEmail(rs.getString("email"));
+                student.setPass(rs.getString("password"));
+                student.setPenalty(rs.getDouble("penalty"));
+                studentList.add(student);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("SortStudentsDescError", e.getMessage());
+        }
+        return studentList;
+    }
+
+    public List<Staff> sortStaffByLastNameDESC() {
+        List<Staff> staffList = new ArrayList<>();
+        try {
+            Connection conn = connectToDB();
+            String sqlSortStaffDesc = "SELECT * FROM librarydb.staff ORDER BY lName DESC";
+            PreparedStatement pstmt = conn.prepareStatement(sqlSortStaffDesc);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Staff staff = new Staff();
+                staff.setStaffID(rs.getInt("staff_id"));
+                staff.setfName(rs.getString("fName"));
+                staff.setlName(rs.getString("lName"));
+                staff.setPosition(rs.getString("position"));
+                staff.setEmail(rs.getString("email"));
+                staff.setPass(rs.getString("password"));
+                staffList.add(staff);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("SortStaffDescError", e.getMessage());
+        }
+        return staffList;
+    }
+
+
+    public Student searchStudentBySchoolID(int schoolID) {
+        Student student = null;
+        try {
+            Connection conn = connectToDB();
+            String sqlSearchStudent = "SELECT * FROM librarydb.student WHERE school_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sqlSearchStudent);
+            pstmt.setInt(1, schoolID);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                student = new Student();
+                student.setSchoolID(rs.getInt("school_id"));
+                student.setfName(rs.getString("fName"));
+                student.setlName(rs.getString("lName"));
+                student.setSection(rs.getString("section"));
+                student.setEmail(rs.getString("email"));
+                student.setPass(rs.getString("password"));
+                student.setPenalty(rs.getDouble("penalty"));
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("SearchStudentError", e.getMessage());
+        }
+        return student;
+    }
+
+    public Staff searchStaffByStaffID(int staffID) {
+        Staff staff = null;
+        try {
+            Connection conn = connectToDB();
+            String sqlSearchStaff = "SELECT * FROM librarydb.staff WHERE staff_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sqlSearchStaff);
+            pstmt.setInt(1, staffID);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                staff = new Staff();
+                staff.setStaffID(rs.getInt("staff_id"));
+                staff.setfName(rs.getString("fName"));
+                staff.setlName(rs.getString("lName"));
+                staff.setPosition(rs.getString("position"));
+                staff.setEmail(rs.getString("email"));
+                staff.setPass(rs.getString("password"));
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("SearchStaffError", e.getMessage());
+        }
+        return staff;
+    }
+
+
+
 
 
 

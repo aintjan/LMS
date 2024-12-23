@@ -18,7 +18,7 @@ public class Staff {
         this.position = position;
     }
 
-    public Staff(String fName, String lName, String email, String pass, int StaffID, String position) {
+    public Staff() {
         this.fName = fName;
         this.lName = lName;
         this.email = email;
